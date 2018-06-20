@@ -12,15 +12,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".components.LoginActivity">
 
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -68,8 +59,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/eTxt_password"
-                tools:layout_editor_absoluteX="0dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eTxt_password">
 
                 <Button
                     android:id="@+id/btn_login"
@@ -92,12 +84,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:onClick="btnRegisterNewAccount"
                     android:text="@string/register_new_account"
                     android:textAllCaps="false"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:layout_editor_absoluteY="115dp"
-                    android:onClick="btnRegisterNewAccount"/>
+                    tools:layout_editor_absoluteY="115dp" />
 
             </LinearLayout>
 
@@ -109,12 +101,27 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:textSize="16sp"
                 android:text="@string/fb_btn_login"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/progressBar_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/login_form"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_form" />
+
 </android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.projects.sebdeveloper6952.chapinleads.components
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -16,57 +17,57 @@ import org.jetbrains.anko.toast
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var callbackManager: CallbackManager
     private val FB_PERM_R_EMAIL = "email"
     private val FB_PERM_R_PUBLIC_PROFILE = "public_profile"
+    private lateinit var fbCallbackManager: CallbackManager
     private val fbPermissions = arrayListOf(FB_PERM_R_EMAIL, FB_PERM_R_PUBLIC_PROFILE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        // facebook testing
-        callbackManager = CallbackManager.Factory.create()
-        with(btn_facebook_login) {
-            setReadPermissions(fbPermissions)
-            registerCallback(callbackManager,
-                    object: FacebookCallback<LoginResult> {
-                        override fun onSuccess(result: LoginResult) {
-                            toast("FacebookLogin: onSuccess()")
-                        }
-                        override fun onCancel() {
-                            toast("FacebookLogin: onCancel()")
-                        }
-                        override fun onError(error: FacebookException?) {
-                            toast("FacebookLogin: onError()")
-                        }
-                    })
-        }
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                object: FacebookCallback<LoginResult> {
-                    override fun onSuccess(result: LoginResult) {
-                        toast("FacebookLogin: onSuccess()")
-                    }
-                    override fun onCancel() {
-                        toast("FacebookLogin: onCancel()")
-                    }
-                    override fun onError(error: FacebookException?) {
-                        toast("FacebookLogin: onError()")
-                    }
-                })
+        setupFbButton()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
+        // forward onActivityResult to facebook callback manager
+        fbCallbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     fun btnLogin(v: View) {
-        startActivity<HomeActivity>()
+        // TODO("remove") test login progress bar
+        progressBar_login.visibility = View.VISIBLE
+        Handler().postDelayed({
+            progressBar_login.visibility = View.GONE
+            startActivity<HomeActivity>()
+        }, 1_000)
     }
 
     fun btnRegisterNewAccount(v: View) {
         startActivity<RegisterNewUserActivity>()
+    }
+
+    /**
+     * Registers a callback to the login button, to respond to login request.
+     */
+    private fun setupFbButton() {
+        fbCallbackManager = CallbackManager.Factory.create()
+        with(btn_facebook_login) {
+            setReadPermissions(fbPermissions)
+            registerCallback(fbCallbackManager,
+                    object : FacebookCallback<LoginResult> {
+                        override fun onSuccess(result: LoginResult) {
+                            toast("FacebookButton: onSuccess()")
+                        }
+
+                        override fun onCancel() {
+                            toast("FacebookButton: onCancel()")
+                        }
+
+                        override fun onError(error: FacebookException?) {
+                            toast("FacebookButton: onError()")
+                        }
+                    })
+        }
     }
 }

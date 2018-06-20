@@ -1,14 +1,14 @@
 package com.projects.sebdeveloper6952.chapinleads.components
 
 
-import DummyData.DummyData
-import adapters.LeadItemRecyclerVAdapter
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
+import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import kotlinx.android.synthetic.main.fragment_recommendations.*
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 import org.jetbrains.anko.design.snackbar

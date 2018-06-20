@@ -17,10 +17,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".components.LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,17 +39,21 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".components.RegisterNewUserActivity" />
+        <activity
+            android:name=".components.RegisterNewUserActivity"
+            android:noHistory="true">
+        </activity>
         <activity
             android:name=".components.HomeActivity"
-            android:label="@string/title_activity_home"></activity>
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".components.NewLeadActivity">
+        </activity>
     </application>
 
 </manifest>

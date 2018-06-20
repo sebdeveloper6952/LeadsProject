@@ -1,11 +1,11 @@
-package adapters
+package com.projects.sebdeveloper6952.chapinleads.adapters
 
-import DummyData.DummyData
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.projects.sebdeveloper6952.chapinleads.R
+import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import kotlinx.android.synthetic.main.list_item_lead.view.*
 
 class LeadItemRecyclerVAdapter(private val data: List<DummyData.ItemLead>):
