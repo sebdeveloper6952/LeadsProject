@@ -9,7 +9,8 @@
     <string name="prompt_name">Nombre</string>
     <string name="prompt_password">Contraseña</string>
     <string name="confirm_password">Confirme contraseña</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Iniciar sesión o registrarse</string>
+    <string name="action_sign_in_failed">Error al iniciar sesión</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
     <string name="logout">Cerrar sesión</string>
     <string name="register_new_account">Crear cuenta</string>

@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme_Alt" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary_alt</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_alt</item>
+        <item name="colorAccent">@color/colorAccent_alt</item>
+    </style>
+
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -12,6 +13,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.projects.sebdeveloper6952.chapinleads.R
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -25,6 +27,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // TODO("check where to put this correctly")
+        if(isUserLoggedIn()) {
+            startActivity<HomeActivity>()
+            finish()
+        }
         setupFbButton()
     }
 
@@ -57,7 +65,8 @@ class LoginActivity : AppCompatActivity() {
             registerCallback(fbCallbackManager,
                     object : FacebookCallback<LoginResult> {
                         override fun onSuccess(result: LoginResult) {
-                            toast("FacebookButton: onSuccess()")
+                            startActivity<HomeActivity>()
+                            finish()
                         }
 
                         override fun onCancel() {
@@ -65,9 +74,17 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         override fun onError(error: FacebookException?) {
-                            toast("FacebookButton: onError()")
+                            snackbar(layout_root, getString(R.string.action_sign_in_failed))
                         }
                     })
         }
+    }
+
+    /**
+     * Returns true if the user is logged in with facebook.
+     */
+    private fun isUserLoggedIn(): Boolean {
+        val accessToken = AccessToken.getCurrentAccessToken()
+        return accessToken != null && !accessToken.isExpired
     }
 }
