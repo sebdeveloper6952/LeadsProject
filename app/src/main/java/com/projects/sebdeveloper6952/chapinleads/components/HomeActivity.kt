@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.facebook.AccessToken
+import com.facebook.AccessTokenTracker
 import com.projects.sebdeveloper6952.chapinleads.R
 import kotlinx.android.synthetic.main.activity_home.*
+import org.jetbrains.anko.startActivity
 
 class HomeActivity : AppCompatActivity() {
 
-
+    private lateinit var accessTokenTracker: AccessTokenTracker
 
     private val mOnNavigationItemSelectedListener
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -37,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         // add the initial RecommendationsFragment
         addFragment(RecommendationsFragment.newInstance())
+        setupFbAccessTokenTracker()
     }
 
     fun setActionBarTitle(title: String) {
@@ -47,5 +51,22 @@ class HomeActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_space, fragment)
                 .commit()
+    }
+
+    /**
+     * Uses facebook access token tracking to know when the user logs out and responds
+     * finishing this activity and returning to LoginActivity
+     */
+    private fun setupFbAccessTokenTracker() {
+        accessTokenTracker = object: AccessTokenTracker() {
+            override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?,
+                                                     currentAccessToken: AccessToken?) {
+                if(currentAccessToken == null) {
+                    startActivity<LoginActivity>()
+                    finish()
+                }
+            }
+
+        }
     }
 }

@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.facebook.login.LoginManager
 import com.projects.sebdeveloper6952.chapinleads.R
+import kotlinx.android.synthetic.main.fragment_settings.view.*
 
 class SettingsFragment : Fragment() {
 
@@ -24,7 +26,13 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        val layout = inflater.inflate(R.layout.fragment_settings, container, false)
+        layout.btn_logout.setOnClickListener { logout() }
+        return layout
+    }
+
+    private fun logout() {
+        LoginManager.getInstance().logOut()
     }
 
     companion object {
