@@ -53,6 +53,7 @@ class RecommendationsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.actionbar_recommendations, menu)
+        // TODO("decide to separate or not search view behaviour")
         // get reference to search view and configure functionality
         val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
@@ -72,6 +73,9 @@ class RecommendationsFragment : Fragment() {
         else -> super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Test function to filter dummy items by title.
+     */
     private fun filterDatasetByTitle(query: String?): ArrayList<DummyData.ItemLead> {
         if(query == null || query == "") return mData
         val list = ArrayList<DummyData.ItemLead>(mData.size)
