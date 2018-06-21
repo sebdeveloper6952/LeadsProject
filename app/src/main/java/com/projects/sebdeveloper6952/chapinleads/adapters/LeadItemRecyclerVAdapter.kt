@@ -4,11 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import com.projects.sebdeveloper6952.chapinleads.R
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import kotlinx.android.synthetic.main.list_item_lead.view.*
+import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData.ItemLead
 
-class LeadItemRecyclerVAdapter(private val data: List<DummyData.ItemLead>):
+class LeadItemRecyclerVAdapter(private var mData: List<ItemLead>):
         RecyclerView.Adapter<LeadItemRecyclerVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,7 +19,7 @@ class LeadItemRecyclerVAdapter(private val data: List<DummyData.ItemLead>):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = mData[position]
         with(holder) {
             imgViewItem.setImageResource(item.imgId)
             txtViewTitle.text = item.title
@@ -25,11 +27,16 @@ class LeadItemRecyclerVAdapter(private val data: List<DummyData.ItemLead>):
         }
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = mData.size
+
+    fun updateDataset(data: ArrayList<ItemLead>) {
+        mData = data
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        val imgViewItem = v.imgView_item
-        val txtViewTitle = v.txtView_title
-        val txtViewDetails = v.txtView_details
+        val imgViewItem: ImageView = v.imgView_item
+        val txtViewTitle: TextView = v.txtView_title
+        val txtViewDetails: TextView = v.txtView_details
     }
 }

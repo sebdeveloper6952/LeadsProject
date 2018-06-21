@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
@@ -14,6 +15,9 @@ import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 import org.jetbrains.anko.design.snackbar
 
 class RecommendationsFragment : Fragment() {
+
+    private lateinit var mAdapter: LeadItemRecyclerVAdapter
+    private var mData = DummyData.RECS
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -35,10 +39,11 @@ class RecommendationsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_recommendations, container, false)
+        mAdapter = LeadItemRecyclerVAdapter(mData)
         with(layout) {
             // initialize recycler view
             with(recyclerView) {
-                adapter = LeadItemRecyclerVAdapter(DummyData.RECS)
+                adapter = mAdapter
                 layoutManager = LinearLayoutManager(activity)
             }
         }
@@ -48,6 +53,15 @@ class RecommendationsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.actionbar_recommendations, menu)
+        // get reference to search view and configure functionality
+        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = true
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mAdapter.updateDataset(filterDatasetByTitle(newText))
+                return true
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
@@ -56,6 +70,15 @@ class RecommendationsFragment : Fragment() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun filterDatasetByTitle(query: String?): ArrayList<DummyData.ItemLead> {
+        if(query == null || query == "") return mData
+        val list = ArrayList<DummyData.ItemLead>(mData.size)
+        for(item in mData)
+            if(item.title.startsWith(query, true))
+                list.add(item)
+        return list
     }
 
     companion object {

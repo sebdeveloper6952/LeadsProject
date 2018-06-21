@@ -19,7 +19,7 @@ object DummyData {
                 ItemLead("Lead6", "Lead6 details...", "category" ,R.drawable.ic_image_black_24dp)
         )
         RECS = arrayListOf(
-                ItemLead("Recommendation1", "Recommendation1 details...", "category" ,R.drawable.ic_image_black_24dp),
+                ItemLead("nVidia", "American technology company. Designs GPUs", "Technology" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Recommendation2", "Recommendation2 details...", "category" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Recommendation3", "Recommendation3 details...", "category" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Recommendation4", "Recommendation4 details...", "category" ,R.drawable.ic_image_black_24dp),
