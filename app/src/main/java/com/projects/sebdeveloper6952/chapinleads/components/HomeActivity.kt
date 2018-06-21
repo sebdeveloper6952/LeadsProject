@@ -18,15 +18,15 @@ class HomeActivity : AppCompatActivity() {
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_recommendations -> {
-                addFragment(RecommendationsFragment.newInstance())
+                setFragment(RecommendationsFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_myLeads -> {
-                addFragment(MyLeadsFragment.newInstance())
+                setFragment(MyLeadsFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_settings -> {
-                addFragment(SettingsFragment.newInstance())
+                setFragment(SettingsFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -39,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
         // set item selected listener for bottom_navigation
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         // add the initial RecommendationsFragment
-        addFragment(RecommendationsFragment.newInstance())
+        setFragment(RecommendationsFragment.newInstance())
         setupFbAccessTokenTracker()
     }
 
@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.title = title
     }
 
-    private fun addFragment(fragment: Fragment) {
+    private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_space, fragment)
                 .commit()
@@ -59,14 +59,13 @@ class HomeActivity : AppCompatActivity() {
      */
     private fun setupFbAccessTokenTracker() {
         accessTokenTracker = object: AccessTokenTracker() {
-            override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?,
-                                                     currentAccessToken: AccessToken?) {
+            override fun onCurrentAccessTokenChanged(
+                    oldAccessToken: AccessToken?, currentAccessToken: AccessToken?) {
                 if(currentAccessToken == null) {
                     startActivity<LoginActivity>()
                     finish()
                 }
             }
-
         }
     }
 }
