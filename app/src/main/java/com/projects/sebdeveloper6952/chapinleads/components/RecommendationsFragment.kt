@@ -12,6 +12,7 @@ import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
+import org.jetbrains.anko.toast
 
 class RecommendationsFragment : Fragment(), ItemFilterListener {
 
@@ -77,7 +78,10 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
         mAdapter.updateDataset(filterDatasetByCategory(list.toTypedArray()))
     }
 
-    override fun onFilterCancel() {}
+    override fun onFilterCancel() {
+        // TODO("remove for release")
+        activity?.toast("onFilterCancel")
+    }
 
     /**
      * Test function to filter dummy items by title.
