@@ -10,11 +10,10 @@ import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
-import kotlinx.android.synthetic.main.fragment_recommendations.*
+import com.projects.sebdeveloper6952.chapinleads.interfaces.RecommendationsFilterListener
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
-import org.jetbrains.anko.design.snackbar
 
-class RecommendationsFragment : Fragment() {
+class RecommendationsFragment : Fragment(), RecommendationsFilterListener {
 
     private lateinit var mAdapter: LeadItemRecyclerVAdapter
     private var mData = DummyData.RECS
@@ -67,11 +66,20 @@ class RecommendationsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
         R.id.action_filter -> {
-            snackbar(layout_root, getString(R.string.action_filter))
+            // TODO("implement dialog to choose categories")
+            TestDialogFragment.newInstance(this, DummyData.CATEGORIES)
+                    .show(activity?.supportFragmentManager, "testDialog")
+            //TestDialogFragment().show(activity?.supportFragmentManager, "testDialog")
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    override fun onSubmit(list: List<String>) {
+        mAdapter.updateDataset(filterDatasetByCategory(list.toTypedArray()))
+    }
+
+    override fun onCancel() {}
 
     /**
      * Test function to filter dummy items by title.
@@ -82,6 +90,18 @@ class RecommendationsFragment : Fragment() {
         for(item in mData)
             if(item.title.startsWith(query, true))
                 list.add(item)
+        return list
+    }
+
+    /**
+     * Test function to filter dummy items by category.
+     */
+    private fun filterDatasetByCategory(categories: Array<String>): ArrayList<DummyData.ItemLead> {
+        val list = ArrayList<DummyData.ItemLead>(mData.size)
+        for(item in mData)
+            for(category in categories)
+                if(item.category.contentEquals(category))
+                    list.add(item)
         return list
     }
 

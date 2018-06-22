@@ -34,4 +34,11 @@
     <string name="new_lead_details">Detalles</string>
     <string name="new_lead_category">Categoría</string>
     <string name="new_lead_add">Crear Lead</string>
+    <string name="dialog_categories_title">Categorías</string>
+    <string name="dialog_categories_btn_ok">Aceptar</string>
+    <string name="dialog_categories_btn_cancel">Cancelar</string>
+    <string name="dialog_categories_btn_neutral">Todas</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
