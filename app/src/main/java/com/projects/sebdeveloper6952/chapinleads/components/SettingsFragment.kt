@@ -27,7 +27,7 @@ class SettingsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_settings, container, false)
-        layout.btn_logout.setOnClickListener { logout() }
+        layout.fragment_settings_btn_logout.setOnClickListener { logout() }
         return layout
     }
 

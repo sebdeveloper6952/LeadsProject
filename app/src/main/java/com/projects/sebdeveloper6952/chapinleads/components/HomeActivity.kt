@@ -12,7 +12,8 @@ import org.jetbrains.anko.startActivity
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var accessTokenTracker: AccessTokenTracker
+    // facebook access token tracker
+    private lateinit var mAccessTokenTracker: AccessTokenTracker
 
     private val mOnNavigationItemSelectedListener
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -37,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         // set item selected listener for bottom_navigation
-        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        activity_home_bottom_nav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         // add the initial RecommendationsFragment
         setFragment(RecommendationsFragment.newInstance())
         setupFbAccessTokenTracker()
@@ -49,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_space, fragment)
+                .replace(R.id.activity_home_fragment_space, fragment)
                 .commit()
     }
 
@@ -58,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
      * finishing this activity and returning to LoginActivity
      */
     private fun setupFbAccessTokenTracker() {
-        accessTokenTracker = object: AccessTokenTracker() {
+        mAccessTokenTracker = object: AccessTokenTracker() {
             override fun onCurrentAccessTokenChanged(
                     oldAccessToken: AccessToken?, currentAccessToken: AccessToken?) {
                 if(currentAccessToken == null) {

@@ -35,8 +35,8 @@ class LeadItemRecyclerVAdapter(private var mData: List<ItemLead>):
     }
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        val imgViewItem: ImageView = v.imgView_item
-        val txtViewTitle: TextView = v.txtView_title
-        val txtViewDetails: TextView = v.txtView_details
+        val imgViewItem: ImageView = v.list_item_lead_image
+        val txtViewTitle: TextView = v.list_item_lead_text_title
+        val txtViewDetails: TextView = v.list_item_lead_text_details
     }
 }

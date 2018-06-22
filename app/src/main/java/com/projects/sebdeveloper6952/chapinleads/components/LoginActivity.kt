@@ -9,7 +9,6 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.projects.sebdeveloper6952.chapinleads.R
 import kotlinx.android.synthetic.main.activity_login.*
@@ -44,9 +43,9 @@ class LoginActivity : AppCompatActivity() {
 
     fun btnLogin(v: View) {
         // TODO("remove") test login progress bar
-        progressBar_login.visibility = View.VISIBLE
+        activity_register_progress_bar.visibility = View.VISIBLE
         Handler().postDelayed({
-            progressBar_login.visibility = View.GONE
+            activity_register_progress_bar.visibility = View.GONE
             startActivity<HomeActivity>()
         }, 1_000)
     }
@@ -60,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun setupFbButton() {
         fbCallbackManager = CallbackManager.Factory.create()
-        with(btn_facebook_login) {
+        with(activity_login_btn_facebook_login) {
             setReadPermissions(fbPermissions)
             registerCallback(fbCallbackManager,
                     object : FacebookCallback<LoginResult> {
@@ -74,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         override fun onError(error: FacebookException?) {
-                            snackbar(layout_root, getString(R.string.action_sign_in_failed))
+                            snackbar(fragment_my_leads_layout_root, getString(R.string.action_sign_in_failed))
                         }
                     })
         }

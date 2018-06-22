@@ -6,9 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.ShareActionProvider
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
@@ -44,12 +42,12 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         val layout = inflater.inflate(R.layout.fragment_my_leads, container, false)
         with(layout) {
             // set recycler view
-            with(recyclerView) {
+            with(fragment_my_leads_recycler_view) {
                 adapter = LeadItemRecyclerVAdapter(DummyData.LEADS)
                 layoutManager = LinearLayoutManager(activity)
             }
             // floating action button onClick listener
-            fabBtn_addLead.setOnClickListener { btnAddLead(layout) }
+            fragment_my_leads_fab_btn_add_lead.setOnClickListener { btnAddLead(layout) }
         }
         return layout
     }
@@ -63,7 +61,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             // TODO("check the validity of the newly created Lead")
             addNewLead(lead)
             // TODO("remove for release")
-            snackbar(layout_root, "Tu nuevo lead ha sido creado.")
+            snackbar(fragment_my_leads_layout_root, "Tu nuevo lead ha sido creado.")
         }
     }
 
@@ -100,7 +98,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     private fun addNewLead(lead: DummyData.ItemLead) {
         DummyData.addLead(lead)
-        recyclerView.adapter = LeadItemRecyclerVAdapter(DummyData.LEADS)
+        fragment_my_leads_recycler_view.adapter = LeadItemRecyclerVAdapter(DummyData.LEADS)
     }
 
     companion object {

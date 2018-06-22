@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_root"
+    android:id="@+id/fragment_my_leads_layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -14,20 +14,20 @@
     tools:context=".components.LoginActivity">
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/activity_login_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/activity_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/eTxt_email"
+                android:id="@+id/activity_register_eTxt_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/eTxt_password"
+                android:id="@+id/activity_register_eTxt_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -52,7 +52,7 @@
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eTxt_email" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_register_eTxt_email" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -62,10 +62,10 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eTxt_password">
+                app:layout_constraintTop_toBottomOf="@+id/activity_register_eTxt_password">
 
                 <Button
-                    android:id="@+id/btn_login"
+                    android:id="@+id/activity_login_btn_login"
                     style="?android:textAppearanceSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                     tools:layout_editor_absoluteY="115dp" />
 
                 <Button
-                    android:id="@+id/btn_register"
+                    android:id="@+id/activity_login_btn_register"
                     style="?android:textAppearanceSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             </LinearLayout>
 
             <com.facebook.login.widget.LoginButton
-                android:id="@+id/btn_facebook_login"
+                android:id="@+id/activity_login_btn_facebook_login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="64dp"
@@ -113,16 +113,16 @@
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/progressBar_login"
+        android:id="@+id/activity_register_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/login_form"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_scroll_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/login_form" />
+        app:layout_constraintTop_toTopOf="@+id/activity_login_scroll_view" />
 
 </android.support.constraint.ConstraintLayout>

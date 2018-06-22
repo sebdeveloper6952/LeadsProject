@@ -42,7 +42,7 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
         mAdapter = LeadItemRecyclerVAdapter(mData)
         with(layout) {
             // initialize recycler view
-            with(recyclerView) {
+            with(fragment_my_leads_recycler_view) {
                 adapter = mAdapter
                 layoutManager = LinearLayoutManager(activity)
             }

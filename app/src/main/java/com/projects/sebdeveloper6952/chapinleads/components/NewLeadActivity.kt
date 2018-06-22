@@ -18,9 +18,9 @@ class NewLeadActivity : AppCompatActivity() {
     }
 
     fun btnCreateLead(v: View) {
-        val title = eTxt_title.text
-        val details = eTxt_details.text
-        val category = eTxt_category.text
+        val title = activity_new_lead_edit_text_title.text
+        val details = activity_new_lead_edit_text_details.text
+        val category = activity_new_lead_edit_text_category.text
         if(title == null || title.length == 0 || details == null || details.length == 0 ||
                 category == null || category.length == 0) {
             snackbar(v, "Error en datos")
