@@ -1,8 +1,6 @@
 package com.projects.sebdeveloper6952.chapinleads.interfaces
 
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
-
-interface RecommendationsFilterListener {
+interface ItemFilterListener {
     fun onSubmit(list: List<String>)
     fun onCancel()
 }
