@@ -7,12 +7,13 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import com.projects.sebdeveloper6952.chapinleads.R
+import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import com.projects.sebdeveloper6952.chapinleads.interfaces.RecommendationsFilterListener
 
 class TestDialogFragment : DialogFragment() {
 
     private lateinit var mContext: Context
-    private lateinit var mListener: RecommendationsFilterListener
+    private lateinit var mListener: ItemFilterListener
     private lateinit var mCategories: Array<String>
 
     override fun onAttach(context: Context?) {
@@ -47,7 +48,7 @@ class TestDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun newInstance(listener: RecommendationsFilterListener, items: Array<String>):
+        fun newInstance(listener: ItemFilterListener, items: Array<String>):
                 TestDialogFragment {
             return TestDialogFragment().apply {
                 mListener = listener

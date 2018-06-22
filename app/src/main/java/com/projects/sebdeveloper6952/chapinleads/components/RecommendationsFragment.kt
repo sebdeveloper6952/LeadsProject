@@ -10,10 +10,10 @@ import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
-import com.projects.sebdeveloper6952.chapinleads.interfaces.RecommendationsFilterListener
+import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 
-class RecommendationsFragment : Fragment(), RecommendationsFilterListener {
+class RecommendationsFragment : Fragment(), ItemFilterListener {
 
     private lateinit var mAdapter: LeadItemRecyclerVAdapter
     private var mData = DummyData.RECS
