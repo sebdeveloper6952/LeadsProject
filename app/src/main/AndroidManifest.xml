@@ -3,7 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projects.sebdeveloper6952.chapinleads">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!--Features-->
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false"/>
+    <!--Permissions-->
+    <uses-permission
+        android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

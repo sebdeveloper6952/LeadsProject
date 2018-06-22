@@ -1,5 +1,6 @@
 package com.projects.sebdeveloper6952.chapinleads.dummy
 
+import android.net.Uri
 import com.projects.sebdeveloper6952.chapinleads.R
 import java.io.Serializable
 
@@ -37,5 +38,18 @@ object DummyData {
     fun addLead(newLead: ItemLead) = LEADS.add(newLead)
     fun addRecommendation(newRec: ItemLead) = RECS.add(newRec)
 
-    data class ItemLead(val title: String, val details: String, val category: String, val imgId: Int): Serializable
+    data class ItemLead(
+            val title: String,
+            val details: String,
+            val category: String,
+            val imgId: Int
+    ): Serializable
+
+    
+    data class Lead(
+            var title: String,
+            var details: String,
+            var category: String,
+            var imgUri: Uri
+    ): Serializable
 }
