@@ -66,20 +66,18 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
         R.id.action_filter -> {
-            // TODO("implement dialog to choose categories")
             TestDialogFragment.newInstance(this, DummyData.CATEGORIES)
                     .show(activity?.supportFragmentManager, "testDialog")
-            //TestDialogFragment().show(activity?.supportFragmentManager, "testDialog")
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun onSubmit(list: List<String>) {
+    override fun onFilterSubmit(list: List<String>) {
         mAdapter.updateDataset(filterDatasetByCategory(list.toTypedArray()))
     }
 
-    override fun onCancel() {}
+    override fun onFilterCancel() {}
 
     /**
      * Test function to filter dummy items by title.

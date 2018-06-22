@@ -13,22 +13,25 @@ object DummyData {
     init {
         LEADS = arrayListOf(
                 ItemLead("Lead1", "Lead1 details...", "Tecnología" ,R.drawable.ic_image_black_24dp),
-                ItemLead("Lead2", "Lead2 details...", "Tecnología" ,R.drawable.ic_image_black_24dp),
-                ItemLead("Lead3", "Lead3 details...", "Deportes" ,R.drawable.ic_image_black_24dp),
+                ItemLead("Lead2", "Lead2 details...", "Matemática" ,R.drawable.ic_image_black_24dp),
+                ItemLead("Lead3", "Lead3 details...", "Publicidad" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Lead4", "Lead4 details...", "Deportes" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Lead5", "Lead5 details...", "Tecnología" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Lead6", "Lead6 details...", "Finanzas" ,R.drawable.ic_image_black_24dp)
         )
         RECS = arrayListOf(
                 ItemLead("Nvidia", "American technology company. Designs GPUs", "Tecnología" ,R.drawable.ic_image_black_24dp),
-                ItemLead("Recommendation2", "Recommendation2 details...", "Tecnología" ,R.drawable.ic_image_black_24dp),
+                ItemLead("Recommendation2", "Recommendation2 details...", "Matemática" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Recommendation3", "Recommendation3 details...", "Deportes" ,R.drawable.ic_image_black_24dp),
-                ItemLead("Recommendation4", "Recommendation4 details...", "Deportes" ,R.drawable.ic_image_black_24dp),
+                ItemLead("Recommendation4", "Recommendation4 details...", "Publicidad" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Recommendation5", "Recommendation5 details...", "Deportes" ,R.drawable.ic_image_black_24dp),
                 ItemLead("Recommendation6", "Recommendation6 details...", "Finanzas" ,R.drawable.ic_image_black_24dp)
         )
 
-        CATEGORIES = arrayOf("Tecnología", "Deportes", "Psicología", "Finanzas")
+        CATEGORIES = arrayOf(
+                "Tecnología", "Deportes", "Psicología", "Finanzas",
+                "Matemática", "Marketing", "Publicidad", "Serigrafía"
+        )
     }
 
     fun addLead(newLead: ItemLead) = LEADS.add(newLead)
