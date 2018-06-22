@@ -11,11 +11,12 @@ import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
+import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import kotlinx.android.synthetic.main.fragment_my_leads.*
 import kotlinx.android.synthetic.main.fragment_my_leads.view.*
 import org.jetbrains.anko.design.snackbar
 
-class MyLeadsFragment : Fragment() {
+class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     val RC_NEW_LEAD = 55
 
@@ -75,11 +76,18 @@ class MyLeadsFragment : Fragment() {
             true
         }
         R.id.action_filter -> {
-            snackbar(layout_root, getString(R.string.action_filter))
+            TestDialogFragment.newInstance(this, DummyData.CATEGORIES)
+                    .show(activity?.supportFragmentManager, "testDialog")
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    override fun onFilterSubmit(list: List<String>) {
+        // TODO("implement filtering")
+    }
+
+    override fun onFilterCancel() { }
 
     private fun btnAddLead(v: View) {
         startActivityForResult(Intent(activity, NewLeadActivity::class.java), RC_NEW_LEAD)

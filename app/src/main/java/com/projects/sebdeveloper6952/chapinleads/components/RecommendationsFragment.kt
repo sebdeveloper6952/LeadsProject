@@ -10,10 +10,11 @@ import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
-import com.projects.sebdeveloper6952.chapinleads.interfaces.RecommendationsFilterListener
+import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
+import org.jetbrains.anko.toast
 
-class RecommendationsFragment : Fragment(), RecommendationsFilterListener {
+class RecommendationsFragment : Fragment(), ItemFilterListener {
 
     private lateinit var mAdapter: LeadItemRecyclerVAdapter
     private var mData = DummyData.RECS
@@ -66,20 +67,21 @@ class RecommendationsFragment : Fragment(), RecommendationsFilterListener {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
         R.id.action_filter -> {
-            // TODO("implement dialog to choose categories")
             TestDialogFragment.newInstance(this, DummyData.CATEGORIES)
                     .show(activity?.supportFragmentManager, "testDialog")
-            //TestDialogFragment().show(activity?.supportFragmentManager, "testDialog")
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun onSubmit(list: List<String>) {
+    override fun onFilterSubmit(list: List<String>) {
         mAdapter.updateDataset(filterDatasetByCategory(list.toTypedArray()))
     }
 
-    override fun onCancel() {}
+    override fun onFilterCancel() {
+        // TODO("remove for release")
+        activity?.toast("onFilterCancel")
+    }
 
     /**
      * Test function to filter dummy items by title.
