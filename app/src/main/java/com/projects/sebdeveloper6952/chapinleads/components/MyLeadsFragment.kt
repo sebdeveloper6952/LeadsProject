@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
@@ -54,14 +55,17 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == RC_NEW_LEAD && resultCode == Activity.RESULT_OK) {
-            // get created lead
-            val lead = data?.getSerializableExtra(NewLeadActivity.EXTRA_NEW_LEAD) as
-                    DummyData.ItemLead
-            // TODO("check the validity of the newly created Lead")
-            addNewLead(lead)
-            // TODO("remove for release")
-            snackbar(fragment_my_leads_layout_root, "Tu nuevo lead ha sido creado.")
+        when(requestCode) {
+            RC_NEW_LEAD -> {
+                if(resultCode == Activity.RESULT_OK) {
+                    // get created lead
+                    val lead = data?.getSerializableExtra(NewLeadActivity.EXTRA_NEW_LEAD) as
+                            DummyData.ItemLead
+                    // TODO("check the validity of the newly created Lead")
+                    addNewLead(lead)
+                    snackbar(fragment_my_leads_layout_root, getString(R.string.new_lead_success))
+                }
+            }
         }
     }
 

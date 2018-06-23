@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.View
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_new_lead.*
 import org.jetbrains.anko.design.snackbar
 

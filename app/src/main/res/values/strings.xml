@@ -36,6 +36,7 @@
     <string name="new_lead_category">Categoría</string>
     <string name="new_lead_add">Crear Lead</string>
     <string name="new_lead_error_in_data">Error, revisa los datos.</string>
+    <string name="new_lead_success">Tu lead ha sido creado.</string>
     <string name="dialog_categories_title">Categorías</string>
     <string name="dialog_categories_btn_ok">Aceptar</string>
     <string name="dialog_categories_btn_cancel">Cancelar</string>
