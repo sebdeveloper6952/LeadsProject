@@ -1,5 +1,10 @@
 package com.projects.sebdeveloper6952.chapinleads.dummy
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Ignore
+import android.net.Uri
 import com.projects.sebdeveloper6952.chapinleads.R
 import java.io.Serializable
 
@@ -37,5 +42,21 @@ object DummyData {
     fun addLead(newLead: ItemLead) = LEADS.add(newLead)
     fun addRecommendation(newRec: ItemLead) = RECS.add(newRec)
 
-    data class ItemLead(val title: String, val details: String, val category: String, val imgId: Int): Serializable
+    data class ItemLead(
+            val title: String,
+            val details: String,
+            val category: String,
+            val imgId: Int
+    ): Serializable
+
+    // test class for Room
+    @Entity(tableName = "leads")
+    data class Lead(
+            @ColumnInfo(name = "id")
+            @PrimaryKey(autoGenerate = true) var id: Int = 0,
+            @ColumnInfo(name = "title") var title: String = "",
+            @ColumnInfo(name = "details") var details: String = "",
+            @ColumnInfo(name = "category") var category: String = "",
+            @ColumnInfo(name = "img_uri") var imgUri: String
+    ): Serializable { @Ignore constructor(): this(0, "", "", "", "") }
 }

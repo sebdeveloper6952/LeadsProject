@@ -10,7 +10,7 @@
         android:id="@+id/activity_new_lead_text_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
         android:text="@string/new_lead_image"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,23 +18,13 @@
 
     <ImageView
         android:id="@+id/activity_new_lead_image_preview"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_new_lead_text_image"
         app:srcCompat="@drawable/ic_image_black_24dp" />
-
-    <Button
-        android:id="@+id/activity_new_lead_btn_add_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/new_lead_addImage"
-        app:layout_constraintStart_toEndOf="@+id/activity_new_lead_image_preview"
-        app:layout_constraintTop_toBottomOf="@+id/activity_new_lead_text_image" />
 
     <EditText
         android:id="@+id/activity_new_lead_edit_text_title"
@@ -90,4 +80,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_new_lead_edit_text_category" />
+
+    <Button
+        android:id="@+id/activity_new_lead_btn_take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:onClick="btnTakePhoto"
+        android:text="@string/new_lead_take_photo"
+        app:layout_constraintStart_toEndOf="@+id/activity_new_lead_image_preview"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/activity_new_lead_btn_choose_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="btnChoosePhoto"
+        android:text="@string/new_lead_choose_photo"
+        app:layout_constraintStart_toEndOf="@+id/activity_new_lead_image_preview"
+        app:layout_constraintTop_toBottomOf="@+id/activity_new_lead_btn_take_photo" />
 </android.support.constraint.ConstraintLayout>
