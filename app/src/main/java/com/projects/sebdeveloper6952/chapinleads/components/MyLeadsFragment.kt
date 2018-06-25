@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
@@ -73,8 +72,8 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         super.onCreateOptionsMenu(menu, inflater)
         // add actions to host activity action bar
         inflater?.inflate(R.menu.actionbar_my_leads, menu)
-        val menuItem = menu?.findItem(R.id.action_share)
         // TODO("define how to share items")
+        //val menuItem = menu?.findItem(R.id.action_share)
         //val shareActionProvider = MenuItemCompat.getActionProvider(menuItem) as ShareActionProvider
     }
 
