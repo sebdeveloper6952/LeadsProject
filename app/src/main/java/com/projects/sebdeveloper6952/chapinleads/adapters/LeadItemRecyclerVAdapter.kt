@@ -1,5 +1,6 @@
 package com.projects.sebdeveloper6952.chapinleads.adapters
 
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_lead.view.*
+import java.io.File
+import java.net.URI
 
 class LeadItemRecyclerVAdapter(private var mData: List<DummyData.Lead>):
         RecyclerView.Adapter<LeadItemRecyclerVAdapter.ViewHolder>() {
@@ -21,8 +25,11 @@ class LeadItemRecyclerVAdapter(private var mData: List<DummyData.Lead>):
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mData[position]
         with(holder) {
-            // TODO("bind lead image to imageView")
-            imgViewItem.setImageResource(R.drawable.ic_image_black_24dp)
+            Picasso.get()
+                    .load(Uri.parse(item.imgUri))
+                    .error(R.drawable.ic_image_black_24dp)
+                    .fit()
+                    .into(imgViewItem)
             txtViewTitle.text = item.title
             txtViewDetails.text = item.details
         }
