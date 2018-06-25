@@ -20,8 +20,8 @@ import java.util.*
 
 class NewLeadActivity : AppCompatActivity() {
 
-    private val RC_TAKE_PHOTO = 56
-    private val RC_CHOOSE_PHOTO = 57
+    private val RC_TAKE_PHOTO = 1
+    private val RC_CHOOSE_PHOTO = 2
     private lateinit var mPhotoUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,20 @@ class NewLeadActivity : AppCompatActivity() {
             RC_TAKE_PHOTO -> {
                 // user took a photo, load image view with photo uri
                 if(resultCode == Activity.RESULT_OK) {
-                    Picasso.get().load(mPhotoUri).into(activity_new_lead_image_preview)
+                    Picasso.get()
+                            .load(mPhotoUri)
+                            .error(R.drawable.ic_error_outline_black_24dp)
+                            .into(activity_new_lead_image_preview)
                 }
             }
             RC_CHOOSE_PHOTO -> {
-                if(resultCode == Activity.RESULT_OK) {  }
+                if(resultCode == Activity.RESULT_OK) {
+                    mPhotoUri = data?.data!!
+                    Picasso.get()
+                            .load(mPhotoUri)
+                            .error(R.drawable.ic_error_outline_black_24dp)
+                            .into(activity_new_lead_image_preview)
+                }
             }
         }
     }
@@ -61,7 +70,10 @@ class NewLeadActivity : AppCompatActivity() {
     }
 
     fun btnChoosePhoto(v: View) {
-
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+        }
+        startActivityForResult(intent, RC_CHOOSE_PHOTO)
     }
 
     fun btnCreateLead(v: View) {

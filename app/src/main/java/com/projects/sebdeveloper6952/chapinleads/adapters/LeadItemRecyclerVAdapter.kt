@@ -27,7 +27,7 @@ class LeadItemRecyclerVAdapter(private var mData: List<DummyData.Lead>):
         with(holder) {
             Picasso.get()
                     .load(Uri.parse(item.imgUri))
-                    .error(R.drawable.ic_image_black_24dp)
+                    .error(R.drawable.ic_error_outline_black_24dp)
                     .fit()
                     .into(imgViewItem)
             txtViewTitle.text = item.title
