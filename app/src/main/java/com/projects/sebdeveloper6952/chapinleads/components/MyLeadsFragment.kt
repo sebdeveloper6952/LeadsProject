@@ -12,6 +12,12 @@ import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapt
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
+import com.projects.sebdeveloper6952.chapinleads.repos.LeadRepository
+import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_my_leads.*
 import kotlinx.android.synthetic.main.fragment_my_leads.view.*
 import org.jetbrains.anko.design.snackbar
@@ -19,6 +25,9 @@ import org.jetbrains.anko.design.snackbar
 class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     val RC_NEW_LEAD = 55
+    private val mDisposable = CompositeDisposable()
+    private lateinit var mAdapter: LeadItemRecyclerVAdapter
+    private lateinit var mLeadRepo: LeadRepository
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -40,16 +49,30 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_my_leads, container, false)
+        // initialize adapter
+        mAdapter = LeadItemRecyclerVAdapter(emptyList())
         with(layout) {
             // set recycler view
             with(fragment_my_leads_recycler_view) {
-                adapter = LeadItemRecyclerVAdapter(DummyData.LEADS)
+                adapter = mAdapter
                 layoutManager = LinearLayoutManager(activity)
             }
             // floating action button onClick listener
             fragment_my_leads_fab_btn_add_lead.setOnClickListener { btnAddLead(layout) }
         }
+
+        // fetch items from database
+        val leadModel = AppDatabase.getInstance(activity?.applicationContext!!)
+                ?.leadsModel()!!
+        mLeadRepo = LeadRepository(leadModel)
+        // fetch leads from database
+        updateLeads()
         return layout
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mDisposable.dispose()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -59,7 +82,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
                 if(resultCode == Activity.RESULT_OK) {
                     // get created lead
                     val lead = data?.getSerializableExtra(NewLeadActivity.EXTRA_NEW_LEAD) as
-                            DummyData.ItemLead
+                            DummyData.Lead
                     // TODO("check the validity of the newly created Lead")
                     addNewLead(lead)
                     snackbar(fragment_my_leads_layout_root, getString(R.string.new_lead_success))
@@ -95,13 +118,41 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     override fun onFilterCancel() { }
 
-    private fun btnAddLead(v: View) {
-        startActivityForResult(Intent(activity, NewLeadActivity::class.java), RC_NEW_LEAD)
+    private fun addNewLead(newLead: DummyData.Lead) {
+        mDisposable.add(
+                mLeadRepo.insertItem(newLead)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onComplete = { updateLeads() },
+                                onError = {
+                                    snackbar(fragment_my_leads_layout_root,
+                                            getString(R.string.new_lead_creating_error))
+                                }
+                        )
+        )
     }
 
-    private fun addNewLead(lead: DummyData.ItemLead) {
-        DummyData.addLead(lead)
-        fragment_my_leads_recycler_view.adapter = LeadItemRecyclerVAdapter(DummyData.LEADS)
+    private fun updateLeads() {
+        mDisposable.add(
+                mLeadRepo.getAllItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onSuccess = { leadsUpdated(it) },
+                                onError = { snackbar(fragment_my_leads_layout_root,
+                                        getString(R.string.lead_update_error))
+                                }
+                        )
+        )
+    }
+
+    private fun leadsUpdated(leads: List<DummyData.Lead>) {
+        mAdapter.updateDataset(ArrayList(leads))
+    }
+
+    private fun btnAddLead(v: View) {
+        startActivityForResult(Intent(activity, NewLeadActivity::class.java), RC_NEW_LEAD)
     }
 
     companion object {

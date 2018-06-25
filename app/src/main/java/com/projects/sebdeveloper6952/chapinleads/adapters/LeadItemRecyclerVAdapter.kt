@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.projects.sebdeveloper6952.chapinleads.R
+import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import kotlinx.android.synthetic.main.list_item_lead.view.*
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData.ItemLead
 
-class LeadItemRecyclerVAdapter(private var mData: List<ItemLead>):
+class LeadItemRecyclerVAdapter(private var mData: List<DummyData.Lead>):
         RecyclerView.Adapter<LeadItemRecyclerVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,7 +21,8 @@ class LeadItemRecyclerVAdapter(private var mData: List<ItemLead>):
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mData[position]
         with(holder) {
-            imgViewItem.setImageResource(item.imgId)
+            // TODO("bind lead image to imageView")
+            imgViewItem.setImageResource(R.drawable.ic_image_black_24dp)
             txtViewTitle.text = item.title
             txtViewDetails.text = item.details
         }
@@ -29,7 +30,7 @@ class LeadItemRecyclerVAdapter(private var mData: List<ItemLead>):
 
     override fun getItemCount() = mData.size
 
-    fun updateDataset(data: ArrayList<ItemLead>) {
+    fun updateDataset(data: ArrayList<DummyData.Lead>) {
         mData = data
         notifyDataSetChanged()
     }

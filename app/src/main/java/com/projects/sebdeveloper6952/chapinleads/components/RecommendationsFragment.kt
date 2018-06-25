@@ -11,6 +11,7 @@ import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapt
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
+import kotlinx.android.synthetic.main.fragment_recommendations.*
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 import org.jetbrains.anko.toast
 
@@ -40,12 +41,9 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_recommendations, container, false)
         mAdapter = LeadItemRecyclerVAdapter(mData)
-        with(layout) {
-            // initialize recycler view
-            with(fragment_my_leads_recycler_view) {
-                adapter = mAdapter
-                layoutManager = LinearLayoutManager(activity)
-            }
+        with(layout.fragment_recommendations_recycler_view) {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(activity)
         }
         return layout
     }
@@ -86,9 +84,9 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
     /**
      * Test function to filter dummy items by title.
      */
-    private fun filterDatasetByTitle(query: String?): ArrayList<DummyData.ItemLead> {
+    private fun filterDatasetByTitle(query: String?): ArrayList<DummyData.Lead> {
         if(query == null || query == "") return mData
-        val list = ArrayList<DummyData.ItemLead>(mData.size)
+        val list = ArrayList<DummyData.Lead>(mData.size)
         for(item in mData)
             if(item.title.startsWith(query, true))
                 list.add(item)
@@ -98,8 +96,8 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
     /**
      * Test function to filter dummy items by category.
      */
-    private fun filterDatasetByCategory(categories: Array<String>): ArrayList<DummyData.ItemLead> {
-        val list = ArrayList<DummyData.ItemLead>(mData.size)
+    private fun filterDatasetByCategory(categories: Array<String>): ArrayList<DummyData.Lead> {
+        val list = ArrayList<DummyData.Lead>(mData.size)
         for(item in mData)
             for(category in categories)
                 if(item.category.contentEquals(category))

@@ -8,7 +8,7 @@
     tools:context=".components.RecommendationsFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_my_leads_recycler_view"
+        android:id="@+id/fragment_recommendations_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
