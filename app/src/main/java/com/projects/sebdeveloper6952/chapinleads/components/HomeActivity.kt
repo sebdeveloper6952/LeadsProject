@@ -1,8 +1,12 @@
 package com.projects.sebdeveloper6952.chapinleads.components
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.facebook.AccessToken
 import com.facebook.AccessTokenTracker
@@ -15,6 +19,8 @@ class HomeActivity : AppCompatActivity() {
     // facebook access token tracker
     private lateinit var mAccessTokenTracker: AccessTokenTracker
     private var activeFragmentId = 0
+    // app permissions
+    private val PERMISSION_EXT_STORAGE = 1;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +30,20 @@ class HomeActivity : AppCompatActivity() {
         // add the initial RecommendationsFragment
         setFragment(RecommendationsFragment.newInstance())
         setupFbAccessTokenTracker()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkAppPermissions()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            PERMISSION_EXT_STORAGE -> {
+                // TODO("handle the case in which the user doesn't grant the permission")
+            }
+        }
     }
 
     fun setActionBarTitle(title: String) {
@@ -62,6 +82,19 @@ class HomeActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_home_fragment_space, fragment)
                 .commit()
+    }
+
+    private fun checkAppPermissions() {
+        // read/write external storage permission not granted
+        if(ContextCompat.checkSelfPermission(applicationContext,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    PERMISSION_EXT_STORAGE
+            )
+        }
     }
 
     /**
