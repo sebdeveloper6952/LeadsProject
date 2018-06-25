@@ -80,8 +80,8 @@ class NewLeadActivity : AppCompatActivity() {
         val title = activity_new_lead_edit_text_title.text
         val details = activity_new_lead_edit_text_details.text
         val category = activity_new_lead_edit_text_category.text
-        if(title == null || title.length == 0 || details == null || details.length == 0 ||
-                category == null || category.length == 0) {
+        if(title == null || title.isEmpty() || details == null || details.isEmpty() ||
+                category == null || category.isEmpty()) {
             snackbar(v, getString(R.string.new_lead_error_in_data))
         } else {
             val newLead = DummyData.Lead(
@@ -115,6 +115,6 @@ class NewLeadActivity : AppCompatActivity() {
     }
 
     companion object {
-        val EXTRA_NEW_LEAD = "lead"
+        const val EXTRA_NEW_LEAD = "lead"
     }
 }
