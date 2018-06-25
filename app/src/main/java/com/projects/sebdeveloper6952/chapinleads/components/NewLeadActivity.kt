@@ -61,11 +61,18 @@ class NewLeadActivity : AppCompatActivity() {
                 category == null || category.length == 0) {
             snackbar(v, getString(R.string.new_lead_error_in_data))
         } else {
-            val newLead = DummyData.ItemLead(
+//            val newLead = DummyData.ItemLead(
+//                    title.toString(),
+//                    details.toString(),
+//                    category.toString(),
+//                    R.drawable.ic_image_black_24dp
+//            )
+            val newLead = DummyData.Lead(
+                    0,
                     title.toString(),
                     details.toString(),
                     category.toString(),
-                    R.drawable.ic_image_black_24dp
+                    "uri_missing"
             )
             // create intent result data to return to the previous activity
             val data = Intent().apply { putExtra(EXTRA_NEW_LEAD, newLead) }

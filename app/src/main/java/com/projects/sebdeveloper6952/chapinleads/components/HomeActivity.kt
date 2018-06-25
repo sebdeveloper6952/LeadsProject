@@ -14,25 +14,7 @@ class HomeActivity : AppCompatActivity() {
 
     // facebook access token tracker
     private lateinit var mAccessTokenTracker: AccessTokenTracker
-
-    private val mOnNavigationItemSelectedListener
-            = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.nav_recommendations -> {
-                setFragment(RecommendationsFragment.newInstance())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.nav_myLeads -> {
-                setFragment(MyLeadsFragment.newInstance())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.nav_settings -> {
-                setFragment(SettingsFragment.newInstance())
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
+    private var activeFragmentId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +28,34 @@ class HomeActivity : AppCompatActivity() {
 
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    private val mOnNavigationItemSelectedListener
+            = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.nav_recommendations -> {
+                if(activeFragmentId != 0) {
+                    setFragment(RecommendationsFragment.newInstance())
+                    activeFragmentId = 0
+                }
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_myLeads -> {
+                if(activeFragmentId != 1) {
+                    setFragment(MyLeadsFragment.newInstance())
+                    activeFragmentId = 1
+                }
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_settings -> {
+                if(activeFragmentId != 2) {
+                    setFragment(SettingsFragment.newInstance())
+                    activeFragmentId = 2
+                }
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
     }
 
     private fun setFragment(fragment: Fragment) {

@@ -28,6 +28,7 @@
     <string name="action_filter">Filtrar</string>
     <string name="action_search">Buscar</string>
     <string name="action_share">Compartir</string>
+    <string name="lead_update_error">Error al actualizar tus leads.</string>
     <string name="new_lead_image">Imagen</string>
     <string name="new_lead_take_photo">Tomar foto</string>
     <string name="new_lead_choose_photo">Escoger</string>
@@ -37,6 +38,7 @@
     <string name="new_lead_add">Crear Lead</string>
     <string name="new_lead_error_in_data">Error, revisa los datos.</string>
     <string name="new_lead_success">Tu lead ha sido creado.</string>
+    <string name="new_lead_creating_error">Error al crear lead: </string>
     <string name="dialog_categories_title">Categorías</string>
     <string name="dialog_categories_btn_ok">Aceptar</string>
     <string name="dialog_categories_btn_cancel">Cancelar</string>
