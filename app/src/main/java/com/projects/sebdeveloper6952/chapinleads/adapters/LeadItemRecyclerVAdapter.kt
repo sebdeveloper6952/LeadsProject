@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.projects.sebdeveloper6952.chapinleads.R
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_lead.view.*
-import java.io.File
-import java.net.URI
 
 class LeadItemRecyclerVAdapter(private var mData: List<LeadModel>):
         RecyclerView.Adapter<LeadItemRecyclerVAdapter.ViewHolder>() {
@@ -30,6 +27,7 @@ class LeadItemRecyclerVAdapter(private var mData: List<LeadModel>):
                     .load(Uri.parse(item.imgUri))
                     .error(R.drawable.ic_error_outline_black_24dp)
                     .fit()
+                    .centerInside()
                     .into(imgViewItem)
             txtViewTitle.text = item.title
             txtViewDetails.text = item.details

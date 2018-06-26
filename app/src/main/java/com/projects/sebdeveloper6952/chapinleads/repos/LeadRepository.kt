@@ -1,6 +1,5 @@
 package com.projects.sebdeveloper6952.chapinleads.repos
 
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 import com.projects.sebdeveloper6952.chapinleads.room.LeadDao
 import io.reactivex.Completable
