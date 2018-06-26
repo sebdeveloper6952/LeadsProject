@@ -4,10 +4,10 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData.Lead
+import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 
 @Database(
-        entities = [(Lead::class)],
+        entities = [(LeadModel::class)],
         version = 1,
         exportSchema = false
 )

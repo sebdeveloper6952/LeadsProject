@@ -9,16 +9,19 @@ import android.support.v7.widget.SearchView
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
+import com.projects.sebdeveloper6952.chapinleads.adapters.RecoItemRVAdapter
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
+import com.projects.sebdeveloper6952.chapinleads.models.DummyRecs
+import com.projects.sebdeveloper6952.chapinleads.models.RecommendationModel
 import kotlinx.android.synthetic.main.fragment_recommendations.*
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 import org.jetbrains.anko.toast
 
 class RecommendationsFragment : Fragment(), ItemFilterListener {
 
-    private lateinit var mAdapter: LeadItemRecyclerVAdapter
-    private var mData = DummyData.RECS
+    private lateinit var mAdapter: RecoItemRVAdapter
+    private var mData = DummyRecs.RECS
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -40,7 +43,7 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_recommendations, container, false)
-        mAdapter = LeadItemRecyclerVAdapter(mData)
+        mAdapter = RecoItemRVAdapter(mData)
         with(layout.fragment_recommendations_recycler_view) {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -84,9 +87,9 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
     /**
      * Test function to filter dummy items by title.
      */
-    private fun filterDatasetByTitle(query: String?): ArrayList<DummyData.Lead> {
+    private fun filterDatasetByTitle(query: String?): ArrayList<RecommendationModel> {
         if(query == null || query == "") return mData
-        val list = ArrayList<DummyData.Lead>(mData.size)
+        val list = ArrayList<RecommendationModel>(mData.size)
         for(item in mData)
             if(item.title.startsWith(query, true))
                 list.add(item)
@@ -96,8 +99,8 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
     /**
      * Test function to filter dummy items by category.
      */
-    private fun filterDatasetByCategory(categories: Array<String>): ArrayList<DummyData.Lead> {
-        val list = ArrayList<DummyData.Lead>(mData.size)
+    private fun filterDatasetByCategory(categories: Array<String>): ArrayList<RecommendationModel> {
+        val list = ArrayList<RecommendationModel>(mData.size)
         for(item in mData)
             for(category in categories)
                 if(item.category.contentEquals(category))

@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider
 import android.view.View
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
+import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_new_lead.*
 import org.jetbrains.anko.design.snackbar
@@ -84,7 +85,7 @@ class NewLeadActivity : AppCompatActivity() {
                 category == null || category.isEmpty()) {
             snackbar(v, getString(R.string.new_lead_error_in_data))
         } else {
-            val newLead = DummyData.Lead(
+            val newLead = LeadModel(
                     0,
                     title.toString(),
                     details.toString(),
