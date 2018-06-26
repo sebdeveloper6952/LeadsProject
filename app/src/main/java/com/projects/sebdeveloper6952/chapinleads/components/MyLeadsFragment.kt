@@ -12,6 +12,7 @@ import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapt
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
+import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 import com.projects.sebdeveloper6952.chapinleads.repos.LeadRepository
 import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -82,7 +83,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
                 if(resultCode == Activity.RESULT_OK) {
                     // get created lead
                     val lead = data?.getSerializableExtra(NewLeadActivity.EXTRA_NEW_LEAD) as
-                            DummyData.Lead
+                            LeadModel
                     // TODO("check the validity of the newly created Lead")
                     addNewLead(lead)
                     snackbar(fragment_my_leads_layout_root, getString(R.string.new_lead_success))
@@ -118,7 +119,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     override fun onFilterCancel() { }
 
-    private fun addNewLead(newLead: DummyData.Lead) {
+    private fun addNewLead(newLead: LeadModel) {
         mDisposable.add(
                 mLeadRepo.insertItem(newLead)
                         .subscribeOn(Schedulers.io())
@@ -147,7 +148,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         )
     }
 
-    private fun leadsUpdated(leads: List<DummyData.Lead>) {
+    private fun leadsUpdated(leads: List<LeadModel>) {
         mAdapter.updateDataset(ArrayList(leads))
     }
 

@@ -10,13 +10,12 @@ import android.widget.TextView
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
+import com.projects.sebdeveloper6952.chapinleads.models.RecommendationModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_lead.view.*
-import java.io.File
-import java.net.URI
 
-class LeadItemRecyclerVAdapter(private var mData: List<LeadModel>):
-        RecyclerView.Adapter<LeadItemRecyclerVAdapter.ViewHolder>() {
+class RecoItemRVAdapter(private var mData: List<RecommendationModel>):
+        RecyclerView.Adapter<RecoItemRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_lead, parent, false)
@@ -38,7 +37,7 @@ class LeadItemRecyclerVAdapter(private var mData: List<LeadModel>):
 
     override fun getItemCount() = mData.size
 
-    fun updateDataset(data: ArrayList<LeadModel>) {
+    fun updateDataset(data: ArrayList<RecommendationModel>) {
         mData = data
         notifyDataSetChanged()
     }
