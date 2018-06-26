@@ -7,14 +7,12 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.*
-import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.adapters.RecoItemRVAdapter
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
+import com.projects.sebdeveloper6952.chapinleads.models.DummyCategories
 import com.projects.sebdeveloper6952.chapinleads.models.DummyRecs
 import com.projects.sebdeveloper6952.chapinleads.models.RecommendationModel
-import kotlinx.android.synthetic.main.fragment_recommendations.*
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 import org.jetbrains.anko.toast
 
@@ -68,7 +66,7 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
         R.id.action_filter -> {
-            TestDialogFragment.newInstance(this, DummyData.CATEGORIES)
+            TestDialogFragment.newInstance(this, DummyCategories.Cats)
                     .show(activity?.supportFragmentManager, "testDialog")
             true
         }

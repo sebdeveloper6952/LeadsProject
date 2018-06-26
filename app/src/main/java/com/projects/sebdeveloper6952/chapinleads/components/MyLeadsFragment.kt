@@ -10,8 +10,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
+import com.projects.sebdeveloper6952.chapinleads.models.DummyCategories
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 import com.projects.sebdeveloper6952.chapinleads.repos.LeadRepository
 import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
@@ -106,7 +106,7 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             true
         }
         R.id.action_filter -> {
-            TestDialogFragment.newInstance(this, DummyData.CATEGORIES)
+            TestDialogFragment.newInstance(this, DummyCategories.Cats)
                     .show(activity?.supportFragmentManager, "testDialog")
             true
         }

@@ -10,7 +10,6 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.view.View
 import com.projects.sebdeveloper6952.chapinleads.R
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_new_lead.*

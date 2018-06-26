@@ -1,7 +1,6 @@
 package com.projects.sebdeveloper6952.chapinleads.room
 
 import android.arch.persistence.room.*
-import com.projects.sebdeveloper6952.chapinleads.dummy.DummyData.Lead
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 
 @Dao
