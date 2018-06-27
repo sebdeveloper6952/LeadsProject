@@ -1,6 +1,5 @@
 package com.projects.sebdeveloper6952.chapinleads.repos
 
-import android.arch.persistence.room.OnConflictStrategy
 import android.content.Context
 import com.projects.sebdeveloper6952.chapinleads.models.*
 import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
@@ -24,14 +23,6 @@ class DataModel private constructor(context: Context) {
     private val mLeadCategoryModel =
             AppDatabase.getInstance(context.applicationContext)?.leadCategoryModel()!!
 
-    // TODO("decide if repositories are necessary")
-    /**
-     * Lead and category repositories.
-     */
-    private val mLeadRepo = LeadRepository(mLeadModel)
-    private val mCategoryRepo = CategoryRepository(mCategoryModel)
-
-
     /**
      * Inserts a new Lead into the leads table. The list of categories is also inserted into
      * the categories table. For each category LeadCategory object is inserted into the
@@ -39,7 +30,7 @@ class DataModel private constructor(context: Context) {
      */
     fun insertLead(newLead: LeadModel, categories: List<String>): Single<Long> {
         return Single.fromCallable {
-            mLeadRepo.insertLead(newLead)
+            mLeadModel.insert(newLead)
         }.doOnSuccess {
             for(cat in categories) {
                 val category = mCategoryModel.getByTitle(cat)
@@ -78,7 +69,7 @@ class DataModel private constructor(context: Context) {
     /**
      * Returns rxjava Single with the id of the newly inserted category.
      */
-    fun insertCategory(newCategory: CategoryModel) = mCategoryRepo.insert(newCategory)
+    fun insertCategory(newCategory: CategoryModel) = mCategoryModel.insert(newCategory)
 
     /**
      * Returns a list of all categories.
