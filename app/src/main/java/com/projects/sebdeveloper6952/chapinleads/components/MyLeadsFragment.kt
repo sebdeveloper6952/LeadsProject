@@ -11,10 +11,8 @@ import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
-import com.projects.sebdeveloper6952.chapinleads.models.DummyCategories
-import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
-import com.projects.sebdeveloper6952.chapinleads.repos.LeadRepository
-import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
+import com.projects.sebdeveloper6952.chapinleads.models.*
+import com.projects.sebdeveloper6952.chapinleads.repos.DataModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -28,7 +26,8 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
     val RC_NEW_LEAD = 55
     private val mDisposable = CompositeDisposable()
     private lateinit var mAdapter: LeadItemRecyclerVAdapter
-    private lateinit var mLeadRepo: LeadRepository
+    private lateinit var mDataModel: DataModel
+    private lateinit var mCategories: List<CategoryModel>
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -62,12 +61,12 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             fragment_my_leads_fab_btn_add_lead.setOnClickListener { btnAddLead(layout) }
         }
 
-        // fetch items from database
-        val leadModel = AppDatabase.getInstance(activity?.applicationContext!!)
-                ?.leadsModel()!!
-        mLeadRepo = LeadRepository(leadModel)
-        // fetch leads from database
+        // TODO("move to ViewModel")
+        // fetch data from DataModel
+        mDataModel = DataModel.getInstance(activity!!)
         updateLeads()
+        updateCategories()
+
         return layout
     }
 
@@ -84,8 +83,9 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
                     // get created lead
                     val lead = data?.getSerializableExtra(NewLeadActivity.EXTRA_NEW_LEAD) as
                             LeadModel
+                    val categories = data.getStringArrayExtra(NewLeadActivity.EXTRA_CATEGORIES)
                     // TODO("check the validity of the newly created Lead")
-                    addNewLead(lead)
+                    addNewLead(lead, categories.asList())
                     snackbar(fragment_my_leads_layout_root, getString(R.string.new_lead_success))
                 }
             }
@@ -119,24 +119,21 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
 
     override fun onFilterCancel() { }
 
-    private fun addNewLead(newLead: LeadModel) {
+    private fun addNewLead(newLead: LeadModel, categories: List<String>) {
         mDisposable.add(
-                mLeadRepo.insertItem(newLead)
+                mDataModel.insertLead(newLead, categories)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy(
-                                onComplete = { updateLeads() },
-                                onError = {
-                                    snackbar(fragment_my_leads_layout_root,
-                                            getString(R.string.new_lead_creating_error))
-                                }
+                                onSuccess = { updateLeads() },
+                                onError = { }
                         )
         )
     }
 
     private fun updateLeads() {
         mDisposable.add(
-                mLeadRepo.getAllItems()
+                mDataModel.getAllLeads()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy(
@@ -148,8 +145,25 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         )
     }
 
+    private fun updateCategories() {
+        mDisposable.add(
+                mDataModel.getAllCategories()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onSuccess = { categoriesUpdated(it) },
+                                onError = {snackbar(fragment_my_leads_layout_root,
+                                        "Error al actualizar categorias")}
+                        )
+        )
+    }
+
     private fun leadsUpdated(leads: List<LeadModel>) {
         mAdapter.updateDataset(ArrayList(leads))
+    }
+
+    private fun categoriesUpdated(categories: List<CategoryModel>) {
+        mCategories = ArrayList(categories)
     }
 
     private fun btnAddLead(v: View) {

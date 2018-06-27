@@ -1,7 +1,7 @@
 package com.projects.sebdeveloper6952.chapinleads.models
 
 data class RecommendationModel(
-        var id: Long,
+        var id: Int,
         var title: String,
         var details: String,
         var category: String,

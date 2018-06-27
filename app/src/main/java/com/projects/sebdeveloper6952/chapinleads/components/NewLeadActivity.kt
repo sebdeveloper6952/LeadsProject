@@ -85,14 +85,16 @@ class NewLeadActivity : AppCompatActivity() {
             snackbar(v, getString(R.string.new_lead_error_in_data))
         } else {
             val newLead = LeadModel(
-                    0,
                     title.toString(),
                     details.toString(),
-                    category.toString(),
+                    //category.toString(),
                     mPhotoUri.toString()
             )
             // create intent result data to return to the previous activity
-            val data = Intent().apply { putExtra(EXTRA_NEW_LEAD, newLead) }
+            val data = Intent().apply {
+                putExtra(EXTRA_NEW_LEAD, newLead)
+                putExtra(EXTRA_CATEGORIES, arrayOf(category.toString()))
+            }
             setResult(Activity.RESULT_OK, data)
             finish()
         }
@@ -116,5 +118,6 @@ class NewLeadActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_NEW_LEAD = "lead"
+        const val EXTRA_CATEGORIES = "categories"
     }
 }

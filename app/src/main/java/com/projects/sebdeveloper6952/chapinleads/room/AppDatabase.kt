@@ -4,16 +4,24 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import com.projects.sebdeveloper6952.chapinleads.models.CategoryModel
+import com.projects.sebdeveloper6952.chapinleads.models.LeadCategory
 import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
 
 @Database(
-        entities = [(LeadModel::class)],
+        entities = [
+            (LeadModel::class),
+            (CategoryModel::class),
+            (LeadCategory::class)
+        ],
         version = 1,
         exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun leadsModel(): LeadDao
+    abstract fun categoriesModel(): CategoryDao
+    abstract fun leadCategoryModel(): LeadCategoryDao
 
     companion object {
         private val DB_NAME = "app.db"
@@ -25,7 +33,7 @@ abstract class AppDatabase: RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         DB_NAME
-                ).allowMainThreadQueries().build()
+                ).build()
             }
             return INSTANCE
         }

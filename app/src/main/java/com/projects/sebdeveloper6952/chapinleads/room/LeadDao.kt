@@ -10,8 +10,14 @@ interface LeadDao {
     fun getAll(): List<LeadModel>
 
     @Query("SELECT * FROM leads WHERE id = :id LIMIT 1")
-    fun getById(id: Int): LeadModel
+    fun getById(id: Long): LeadModel
+
+    @Query("SELECT * FROM leads WHERE title = :title")
+    fun getByTitle(title: String): List<LeadModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(newLead: LeadModel)
+    fun insert(newLead: LeadModel): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(newLeads: List<LeadModel>): List<Long>
 }
