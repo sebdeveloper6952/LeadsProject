@@ -11,10 +11,7 @@ import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
-import com.projects.sebdeveloper6952.chapinleads.models.CategoryModel
-import com.projects.sebdeveloper6952.chapinleads.models.DummyCategories
-import com.projects.sebdeveloper6952.chapinleads.models.LeadCategory
-import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
+import com.projects.sebdeveloper6952.chapinleads.models.*
 import com.projects.sebdeveloper6952.chapinleads.repos.DataModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -64,27 +61,13 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             fragment_my_leads_fab_btn_add_lead.setOnClickListener { btnAddLead(layout) }
         }
 
-        // fetch leads from database
+        // TODO("move to ViewModel")
+        // fetch data from DataModel
         mDataModel = DataModel.getInstance(activity!!)
         updateLeads()
         updateCategories()
 
-        var leadCat: LeadCategory
-        // test
-        mDisposable.add(mDataModel.getAllLeadCategoryObjects()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = { update(it) },
-                        onError = {  }
-                )
-        )
-
         return layout
-    }
-
-    fun update(list: List<LeadCategory>) {
-        snackbar(fragment_my_leads_layout_root, "lol")
     }
 
     override fun onDestroy() {

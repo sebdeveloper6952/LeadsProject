@@ -2,11 +2,8 @@ package com.projects.sebdeveloper6952.chapinleads.repos
 
 import android.arch.persistence.room.OnConflictStrategy
 import android.content.Context
-import com.projects.sebdeveloper6952.chapinleads.models.CategoryModel
-import com.projects.sebdeveloper6952.chapinleads.models.LeadCategory
-import com.projects.sebdeveloper6952.chapinleads.models.LeadModel
+import com.projects.sebdeveloper6952.chapinleads.models.*
 import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
-import io.reactivex.Completable
 import io.reactivex.Single
 
 class DataModel private constructor(context: Context) {
@@ -63,8 +60,19 @@ class DataModel private constructor(context: Context) {
     /**
      * Returns a Lead object with all of its categories.
      */
-    fun getLeadWithCategories() {
+    fun getLeadWithCategories(id: Long): Single<List<LeadWithCategories>> {
+        return Single.fromCallable {
+            mLeadCategoryModel.getLeadWithCategories(id)
+        }
+    }
 
+    /**
+     * Returns a category with a list of all the Leads associated with the specified category.
+     */
+    fun getCategoryWithLeads(id: Long): Single<List<CategoryWithLeads>> {
+        return Single.fromCallable {
+            mLeadCategoryModel.getCategoryWithLeads(id)
+        }
     }
 
     /**
@@ -78,11 +86,6 @@ class DataModel private constructor(context: Context) {
     fun getAllCategories(): Single<List<CategoryModel>> {
         return Single.fromCallable { mCategoryModel.getAll() }
     }
-
-    /**
-     * Returns a category with a list of all the Leads associated with the specified category.
-     */
-    fun getCategoryWithLeads() { }
 
     fun getLeadCategoryObject(id: Long): Single<LeadCategory> {
         return Single.fromCallable {

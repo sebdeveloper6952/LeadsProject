@@ -4,12 +4,11 @@ import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
 
 
-data class CategoryWithLeads(
-        @Embedded val category: CategoryModel,
+data class CategoryWithLeads(@Embedded val category: CategoryModel) {
         @Relation(
                 parentColumn = "id",
-                entityColumn = "",
+                entityColumn = "categoryId",
                 entity = LeadCategory::class,
                 projection = ["leadId"]
-        ) val leadIdList: List<Long>
-)
+        ) var leadIdList: List<Long>? = null
+}
