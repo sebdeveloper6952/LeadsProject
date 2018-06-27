@@ -3,6 +3,7 @@ package com.projects.sebdeveloper6952.chapinleads.repos
 import android.content.Context
 import com.projects.sebdeveloper6952.chapinleads.models.*
 import com.projects.sebdeveloper6952.chapinleads.room.AppDatabase
+import io.reactivex.Observable
 import io.reactivex.Single
 
 class DataModel private constructor(context: Context) {

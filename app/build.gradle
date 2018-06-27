@@ -50,4 +50,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
     // Picasso
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    // ViewModel
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 }
