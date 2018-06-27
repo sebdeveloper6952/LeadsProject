@@ -67,13 +67,11 @@ class LoginActivity : AppCompatActivity() {
                             startActivity<HomeActivity>()
                             finish()
                         }
-
                         override fun onCancel() {
                             toast("FacebookButton: onCancel()")
                         }
-
                         override fun onError(error: FacebookException?) {
-                            snackbar(fragment_my_leads_layout_root, getString(R.string.action_sign_in_failed))
+                            snackbar(activity_login_layout_root, getString(R.string.action_sign_in_failed))
                         }
                     })
         }

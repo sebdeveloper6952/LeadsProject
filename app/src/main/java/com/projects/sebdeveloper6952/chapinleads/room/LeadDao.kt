@@ -14,4 +14,7 @@ interface LeadDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(newLead: LeadModel): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(newLeads: List<LeadModel>): List<Long>
 }

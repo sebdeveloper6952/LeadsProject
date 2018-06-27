@@ -1,9 +1,6 @@
 package com.projects.sebdeveloper6952.chapinleads.room
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.projects.sebdeveloper6952.chapinleads.models.CategoryModel
 
 @Dao
@@ -15,10 +12,15 @@ interface CategoryDao {
     @Query("SELECT * FROM categories WHERE id = :id")
     fun getById(id: Long): CategoryModel
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(newCat: CategoryModel): Long
+    @Query("SELECT * FROM categories WHERE title = :title")
+    fun getByTitle(title: String): CategoryModel
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(category: CategoryModel): Long
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(categories: List<CategoryModel>): List<Long>
 
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    fun update(category: CategoryModel)
 }

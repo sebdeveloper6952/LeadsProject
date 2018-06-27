@@ -2,9 +2,13 @@ package com.projects.sebdeveloper6952.chapinleads.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
+import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(tableName = "categories")
+@Entity(
+        tableName = "categories",
+        indices = [Index(value = ["title"], unique = true)]
+)
 data class CategoryModel(
         @PrimaryKey(autoGenerate = true) var id: Long? = null,
         var title: String

@@ -5,13 +5,11 @@ import com.projects.sebdeveloper6952.chapinleads.room.LeadDao
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class LeadRepository(private val leadModel: LeadDao) {
+class LeadRepository(private val mLeadModel: LeadDao) {
 
-    fun getAllLeads(): Single<List<LeadModel>> {
-        return Single.fromCallable { leadModel.getAll() }
-    }
+    fun getAllLeads() = mLeadModel.getAll()
 
-    fun insertLead(newLead: LeadModel): Completable {
-        return Completable.fromCallable { leadModel.insert(newLead) }
-    }
+    fun insertLead(newLead: LeadModel) = mLeadModel.insert(newLead)
+
+    fun insertAll(newLeads: List<LeadModel>) = mLeadModel.insert(newLeads)
 }
