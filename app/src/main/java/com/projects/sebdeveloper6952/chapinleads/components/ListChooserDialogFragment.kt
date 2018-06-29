@@ -1,18 +1,23 @@
 package com.projects.sebdeveloper6952.chapinleads.components
 
-
 import android.app.Dialog
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 
-class TestDialogFragment : DialogFragment() {
+class ListChooserDialogFragment : DialogFragment() {
 
     private lateinit var mContext: Context
-    private lateinit var mListener: ItemFilterListener
+    private lateinit var mListener: OnCompleteListener
     private lateinit var mCategories: Array<String>
 
     override fun onAttach(context: Context?) {
@@ -46,13 +51,20 @@ class TestDialogFragment : DialogFragment() {
         return builder.create()
     }
 
+    interface OnCompleteListener {
+        fun onFilterSubmit(list: List<String>)
+        // TODO("decide if this callback is necessary")
+        fun onFilterCancel()
+    }
+
     companion object {
-        fun newInstance(listener: ItemFilterListener, items: Array<String>):
-                TestDialogFragment {
-            return TestDialogFragment().apply {
+        fun newInstance(listener: OnCompleteListener, items: Array<String>):
+                ListChooserDialogFragment {
+            return ListChooserDialogFragment().apply {
                 mListener = listener
                 mCategories = items
             }
         }
     }
+
 }

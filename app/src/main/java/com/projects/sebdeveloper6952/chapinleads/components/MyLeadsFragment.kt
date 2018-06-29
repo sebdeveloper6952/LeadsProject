@@ -2,6 +2,7 @@ package com.projects.sebdeveloper6952.chapinleads.components
 
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,8 @@ import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import com.projects.sebdeveloper6952.chapinleads.models.*
 import com.projects.sebdeveloper6952.chapinleads.repos.DataModel
+import com.projects.sebdeveloper6952.chapinleads.viewmodels.MyLeadsViewModel
+import com.projects.sebdeveloper6952.chapinleads.viewmodels.MyLeadsViewModelFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -21,13 +24,13 @@ import kotlinx.android.synthetic.main.fragment_my_leads.*
 import kotlinx.android.synthetic.main.fragment_my_leads.view.*
 import org.jetbrains.anko.design.snackbar
 
-class MyLeadsFragment : Fragment(), ItemFilterListener {
+class MyLeadsFragment : Fragment(), ListChooserDialogFragment.OnCompleteListener {
 
     val RC_NEW_LEAD = 55
     private val mDisposable = CompositeDisposable()
     private lateinit var mAdapter: LeadItemRecyclerVAdapter
-    private lateinit var mDataModel: DataModel
-    private lateinit var mCategories: List<CategoryModel>
+    private lateinit var mViewModel: MyLeadsViewModel
+    private lateinit var mLayoutRoot: View
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -43,12 +46,23 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         super.onCreate(savedInstanceState)
         // this fragment contributes to the host activity action bar
         setHasOptionsMenu(true)
+
+        // TODO("fix this")
+        val mDataModel = DataModel.getInstance(activity!!)
+
+        val mViewModelFactory = MyLeadsViewModelFactory(mDataModel)
+
+        mViewModel = ViewModelProviders
+                .of(this, mViewModelFactory)
+                .get(MyLeadsViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_my_leads, container, false)
+        // for snackbars to work
+        mLayoutRoot = layout.fragment_my_leads_layout_root
         // initialize adapter
         mAdapter = LeadItemRecyclerVAdapter(emptyList())
         with(layout) {
@@ -61,11 +75,8 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             fragment_my_leads_fab_btn_add_lead.setOnClickListener { btnAddLead(layout) }
         }
 
-        // TODO("move to ViewModel")
-        // fetch data from DataModel
-        mDataModel = DataModel.getInstance(activity!!)
+        // fetch data from ViewModel
         updateLeads()
-        updateCategories()
 
         return layout
     }
@@ -106,64 +117,64 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             true
         }
         R.id.action_filter -> {
-            TestDialogFragment.newInstance(this, DummyCategories.Cats)
-                    .show(activity?.supportFragmentManager, "testDialog")
+            mDisposable.add(mViewModel.getAllCategoryTitles()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                            onSuccess = { showCategoriesDialog(it) },
+                            onError = { onError(it.message!!) }
+                    ))
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
 
     override fun onFilterSubmit(list: List<String>) {
-        // TODO("implement filtering")
+        mViewModel.getLeadsForCategories(list)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onError = { onError(it.message!!) },
+                        onSuccess = { leadsUpdated(it) }
+                )
     }
 
     override fun onFilterCancel() { }
 
     private fun addNewLead(newLead: LeadModel, categories: List<String>) {
-        mDisposable.add(
-                mDataModel.insertLead(newLead, categories)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                                onSuccess = { updateLeads() },
-                                onError = { }
-                        )
+        mDisposable.add(mViewModel.addNewLead(newLead, categories)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = { updateLeads() },
+                        onError = { onError(it.message!!) }
+                )
         )
     }
 
     private fun updateLeads() {
         mDisposable.add(
-                mDataModel.getAllLeads()
+                mViewModel.getAllLeads()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy(
                                 onSuccess = { leadsUpdated(it) },
-                                onError = { snackbar(fragment_my_leads_layout_root,
-                                        getString(R.string.lead_update_error))
-                                }
+                                onError = { onError(it.message!!) }
                         )
         )
     }
 
-    private fun updateCategories() {
-        mDisposable.add(
-                mDataModel.getAllCategories()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                                onSuccess = { categoriesUpdated(it) },
-                                onError = {snackbar(fragment_my_leads_layout_root,
-                                        "Error al actualizar categorias")}
-                        )
-        )
+    private fun onError(msg: String) {
+        snackbar(mLayoutRoot,"Error: $msg")
     }
 
     private fun leadsUpdated(leads: List<LeadModel>) {
         mAdapter.updateDataset(ArrayList(leads))
     }
 
-    private fun categoriesUpdated(categories: List<CategoryModel>) {
-        mCategories = ArrayList(categories)
+    private fun showCategoriesDialog(categories: List<String>) {
+        ListChooserDialogFragment.newInstance(this, categories.toTypedArray())
+                .show(activity?.supportFragmentManager, "categoriesDialog")
     }
 
     private fun btnAddLead(v: View) {

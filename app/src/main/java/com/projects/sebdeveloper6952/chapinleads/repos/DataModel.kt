@@ -48,34 +48,58 @@ class DataModel private constructor(context: Context) {
         return Single.fromCallable { mLeadModel.getAll() }
     }
 
+    fun getLeadsByIds(ids: List<Long>): Single<List<LeadModel>> {
+        return Single.fromCallable {
+            mLeadModel.getByIds(ids)
+        }
+    }
+
     /**
      * Returns a Lead object with all of its categories.
      */
-    fun getLeadWithCategories(id: Long): Single<List<LeadWithCategories>> {
+    fun getLeadWithCategories(leadId: Long): Single<List<LeadWithCategories>> {
         return Single.fromCallable {
-            mLeadCategoryModel.getLeadWithCategories(id)
+            mLeadCategoryModel.getLeadWithCategories(leadId)
         }
     }
 
     /**
      * Returns a category with a list of all the Leads associated with the specified category.
      */
-    fun getCategoryWithLeads(id: Long): Single<List<CategoryWithLeads>> {
+    fun getCategoryWithLeads(catId: Long): Single<List<CategoryWithLeads>> {
         return Single.fromCallable {
-            mLeadCategoryModel.getCategoryWithLeads(id)
+            mLeadCategoryModel.getCategoryWithLeads(catId)
+        }
+    }
+
+    fun getCategoriesWithLeads(catIds: List<Long>): Single<List<CategoryWithLeads>> {
+        return Single.fromCallable {
+            mLeadCategoryModel.getCategoryWithLeads(catIds)
         }
     }
 
     /**
      * Returns rxjava Single with the id of the newly inserted category.
      */
-    fun insertCategory(newCategory: CategoryModel) = mCategoryModel.insert(newCategory)
+    fun insertCategory(newCategory: CategoryModel): Single<Long> {
+        return Single.fromCallable {
+            mCategoryModel.insert(newCategory)
+        }
+    }
 
     /**
      * Returns a list of all categories.
      */
     fun getAllCategories(): Single<List<CategoryModel>> {
-        return Single.fromCallable { mCategoryModel.getAll() }
+        return Single.fromCallable {
+            mCategoryModel.getAll()
+        }
+    }
+
+    fun getCategoriesIdsByTitle(categories: List<String>): Single<List<Long>> {
+        return Single.fromCallable {
+            mCategoryModel.getIdsByTitle(categories)
+        }
     }
 
     fun getLeadCategoryObject(id: Long): Single<LeadCategory> {
@@ -87,6 +111,12 @@ class DataModel private constructor(context: Context) {
     fun getAllLeadCategoryObjects(): Single<List<LeadCategory>> {
         return Single.fromCallable {
             mLeadCategoryModel.getAll()
+        }
+    }
+
+    fun getAllCategoryTitles(): Single<List<String>> {
+        return Single.fromCallable {
+            mCategoryModel.getAllTitles()
         }
     }
 

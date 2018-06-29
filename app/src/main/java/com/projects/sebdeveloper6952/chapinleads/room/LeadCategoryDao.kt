@@ -26,6 +26,9 @@ interface LeadCategoryDao {
     @Query("SELECT * FROM categories WHERE id = :id")
     fun getCategoryWithLeads(id: Long): List<CategoryWithLeads>
 
+    @Query("SELECT * FROM categories WHERE id IN(:ids)")
+    fun getCategoryWithLeads(ids: List<Long>): List<CategoryWithLeads>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(leadCategory: LeadCategory):  Long
 

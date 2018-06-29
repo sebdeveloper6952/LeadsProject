@@ -12,6 +12,9 @@ interface LeadDao {
     @Query("SELECT * FROM leads WHERE id = :id LIMIT 1")
     fun getById(id: Long): LeadModel
 
+    @Query("SELECT * FROM leads WHERE id IN(:ids)")
+    fun getByIds(ids: List<Long>): List<LeadModel>
+
     @Query("SELECT * FROM leads WHERE title = :title")
     fun getByTitle(title: String): List<LeadModel>
 
