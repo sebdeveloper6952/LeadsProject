@@ -34,6 +34,10 @@ class MyLeadsViewModel(private val mDataModel: DataModel): ViewModel() {
                 .map { it }
     }
 
+    fun getLeadByTitlePattern(searchPattern: String): Single<List<LeadModel>> {
+        return mDataModel.getLeadsByTitlePattern(searchPattern)
+    }
+
     private fun getIds(list: List<CategoryWithLeads>): List<Long> {
         val ids = ArrayList<Long>()
         for(cat in list) {

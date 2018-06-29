@@ -10,9 +10,7 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.projects.sebdeveloper6952.chapinleads.R
-import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 
 class ListChooserDialogFragment : DialogFragment() {
 

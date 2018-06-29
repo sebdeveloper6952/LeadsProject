@@ -54,6 +54,12 @@ class DataModel private constructor(context: Context) {
         }
     }
 
+    fun getLeadsByTitlePattern(searchPattern: String): Single<List<LeadModel>> {
+        return Single.fromCallable {
+            mLeadModel.getByTitlePattern(searchPattern)
+        }
+    }
+
     /**
      * Returns a Lead object with all of its categories.
      */

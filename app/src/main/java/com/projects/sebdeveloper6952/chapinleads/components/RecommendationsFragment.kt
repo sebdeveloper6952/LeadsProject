@@ -9,7 +9,6 @@ import android.support.v7.widget.SearchView
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.R
 import com.projects.sebdeveloper6952.chapinleads.adapters.RecoItemRVAdapter
-import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import com.projects.sebdeveloper6952.chapinleads.models.DummyCategories
 import com.projects.sebdeveloper6952.chapinleads.models.DummyRecs
 import com.projects.sebdeveloper6952.chapinleads.models.RecommendationModel

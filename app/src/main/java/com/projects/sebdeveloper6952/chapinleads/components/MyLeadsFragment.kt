@@ -8,10 +8,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.*
 import com.projects.sebdeveloper6952.chapinleads.adapters.LeadItemRecyclerVAdapter
 import com.projects.sebdeveloper6952.chapinleads.R
-import com.projects.sebdeveloper6952.chapinleads.interfaces.ItemFilterListener
 import com.projects.sebdeveloper6952.chapinleads.models.*
 import com.projects.sebdeveloper6952.chapinleads.repos.DataModel
 import com.projects.sebdeveloper6952.chapinleads.viewmodels.MyLeadsViewModel
@@ -22,6 +22,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_my_leads.*
 import kotlinx.android.synthetic.main.fragment_my_leads.view.*
+import org.jetbrains.anko.Android
 import org.jetbrains.anko.design.snackbar
 
 class MyLeadsFragment : Fragment(), ListChooserDialogFragment.OnCompleteListener {
@@ -107,6 +108,21 @@ class MyLeadsFragment : Fragment(), ListChooserDialogFragment.OnCompleteListener
         super.onCreateOptionsMenu(menu, inflater)
         // add actions to host activity action bar
         inflater?.inflate(R.menu.actionbar_my_leads, menu)
+        // get reference to search view and configure funtionality
+        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = true
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mDisposable.add(mViewModel.getLeadByTitlePattern(newText!!)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onError = { onError(it.message!!) },
+                                onSuccess = { leadsUpdated(it) }
+                        ))
+                return true
+            }
+        })
         // TODO("define how to share items")
         //val menuItem = menu?.findItem(R.id.action_share)
         //val shareActionProvider = MenuItemCompat.getActionProvider(menuItem) as ShareActionProvider

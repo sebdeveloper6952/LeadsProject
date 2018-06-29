@@ -18,6 +18,9 @@ interface LeadDao {
     @Query("SELECT * FROM leads WHERE title = :title")
     fun getByTitle(title: String): List<LeadModel>
 
+    @Query("SELECT * FROM leads WHERE title LIKE '%' || :title || '%'")
+    fun getByTitlePattern(title: String): List<LeadModel>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(newLead: LeadModel): Long
 
