@@ -11,10 +11,10 @@ import java.io.Serializable
         ]
 )
 data class LeadModel(
-        @PrimaryKey(autoGenerate = true) var id: Long? = null,
-        @ColumnInfo(name = "title") var title: String = "",
-        @ColumnInfo(name = "details") var details: String = "",
-        @ColumnInfo(name = "img_uri") var imgUri: String
+        @PrimaryKey(autoGenerate = true) var id: Long?,
+        var title: String = "",
+        var details: String = "",
+        var imgUri: String
 ): Serializable {
     @Ignore constructor(title: String,
                         details:String,

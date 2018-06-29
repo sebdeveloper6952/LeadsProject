@@ -16,7 +16,7 @@ import com.projects.sebdeveloper6952.chapinleads.models.RecommendationModel
 import kotlinx.android.synthetic.main.fragment_recommendations.view.*
 import org.jetbrains.anko.toast
 
-class RecommendationsFragment : Fragment(), ItemFilterListener {
+class RecommendationsFragment : Fragment(), ListChooserDialogFragment.OnCompleteListener {
 
     private lateinit var mAdapter: RecoItemRVAdapter
     private var mData = DummyRecs.RECS
@@ -66,7 +66,7 @@ class RecommendationsFragment : Fragment(), ItemFilterListener {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId) {
         R.id.action_filter -> {
-            TestDialogFragment.newInstance(this, DummyCategories.Cats)
+            ListChooserDialogFragment.newInstance(this, DummyCategories.Cats)
                     .show(activity?.supportFragmentManager, "testDialog")
             true
         }

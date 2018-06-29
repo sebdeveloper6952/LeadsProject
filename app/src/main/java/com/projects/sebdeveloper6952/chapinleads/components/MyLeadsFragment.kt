@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_my_leads.*
 import kotlinx.android.synthetic.main.fragment_my_leads.view.*
 import org.jetbrains.anko.design.snackbar
 
-class MyLeadsFragment : Fragment(), ItemFilterListener {
+class MyLeadsFragment : Fragment(), ListChooserDialogFragment.OnCompleteListener {
 
     val RC_NEW_LEAD = 55
     private val mDisposable = CompositeDisposable()
@@ -117,15 +117,26 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
             true
         }
         R.id.action_filter -> {
-            TestDialogFragment.newInstance(this, DummyCategories.Cats)
-                    .show(activity?.supportFragmentManager, "testDialog")
+            mDisposable.add(mViewModel.getAllCategoryTitles()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                            onSuccess = { showCategoriesDialog(it) },
+                            onError = { onError(it.message!!) }
+                    ))
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
 
     override fun onFilterSubmit(list: List<String>) {
-        // TODO("implement filtering")
+        mViewModel.getLeadsForCategories(list)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onError = { onError(it.message!!) },
+                        onSuccess = { leadsUpdated(it) }
+                )
     }
 
     override fun onFilterCancel() { }
@@ -153,18 +164,6 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         )
     }
 
-    private fun updateCategories() {
-        mDisposable.add(
-                mViewModel.getAllCategories()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                                onSuccess = { categoriesUpdated(it) },
-                                onError = { onError(it.message!!) }
-                        )
-        )
-    }
-
     private fun onError(msg: String) {
         snackbar(mLayoutRoot,"Error: $msg")
     }
@@ -173,8 +172,9 @@ class MyLeadsFragment : Fragment(), ItemFilterListener {
         mAdapter.updateDataset(ArrayList(leads))
     }
 
-    private fun categoriesUpdated(categories: List<CategoryModel>) {
-
+    private fun showCategoriesDialog(categories: List<String>) {
+        ListChooserDialogFragment.newInstance(this, categories.toTypedArray())
+                .show(activity?.supportFragmentManager, "categoriesDialog")
     }
 
     private fun btnAddLead(v: View) {
